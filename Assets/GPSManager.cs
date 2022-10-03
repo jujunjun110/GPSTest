@@ -25,20 +25,28 @@ public class GPSManager : MonoBehaviour
     {
         Input.location.Start();
         Input.compass.enabled = true;
+
         var dt = DateTime.Now;
-        var isEnabled = Input.location.isEnabledByUser;
         var status = Input.location.status;
+        var isEnabled = Input.location.isEnabledByUser;
         var isCompassEnabled = Input.compass.enabled;
+
+        // var latitude = Input.location.lastData.latitude;
+        // var longitude = Input.location.lastData.longitude;
+
+        var lastData = Input.location.lastData;
+        System.Globalization.CultureInfo invariantCulture = System.Globalization.CultureInfo.InvariantCulture;
+        double latitude = double.Parse(lastData.latitude.ToString("R", invariantCulture), invariantCulture);
+        double longitude = double.Parse(lastData.longitude.ToString("R", invariantCulture), invariantCulture);
+
+        var trueHeading = Input.compass.trueHeading;
+        var magneticHeading = Input.compass.magneticHeading;
 
         timeStampText.SetText(dt.ToString(CultureInfo.CurrentCulture));
         isEnabledText.SetText($"IsEnabled: {isEnabled}");
         isCompassEnabledText.SetText($"IsCompassEnabled: {isCompassEnabled}");
         statusText.SetText($"Status: {status}");
 
-        var latitude = Input.location.lastData.latitude;
-        var longitude = Input.location.lastData.longitude;
-        var trueHeading = Input.compass.trueHeading;
-        var magneticHeading = Input.compass.magneticHeading;
         latText.SetText($"Latitude: {latitude}");
         lngText.SetText($"Longitude: {longitude}");
         trueHeadingText.SetText($"Heading: {trueHeading}");
