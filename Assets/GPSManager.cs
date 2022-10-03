@@ -9,6 +9,7 @@ public class GPSManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timeStampText;
     [SerializeField] private TextMeshProUGUI isEnabledText;
+    [SerializeField] private TextMeshProUGUI isCompassEnabledText;
     [SerializeField] private TextMeshProUGUI statusText;
     [SerializeField] private TextMeshProUGUI latText;
     [SerializeField] private TextMeshProUGUI lngText;
@@ -16,18 +17,21 @@ public class GPSManager : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating(nameof(Do), 1f, 1f);
-        Input.location.Start();
+        InvokeRepeating(nameof(UpdateDebugTexts), 1f, 1f);
     }
 
-    void Do()
+    void UpdateDebugTexts()
     {
+        Input.location.Start();
+        Input.compass.enabled = true;
         var dt = DateTime.Now;
         var isEnabled = Input.location.isEnabledByUser;
         var status = Input.location.status;
+        var isCompassEnabled = Input.compass.enabled;
 
         timeStampText.SetText(dt.ToString(CultureInfo.CurrentCulture));
         isEnabledText.SetText($"IsEnabled: {isEnabled}");
+        isCompassEnabledText.SetText($"IsCompassEnabled: {isCompassEnabled}");
         statusText.SetText($"Status: {status}");
 
         var latitude = Input.location.lastData.latitude;
