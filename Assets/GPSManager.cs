@@ -13,7 +13,8 @@ public class GPSManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI statusText;
     [SerializeField] private TextMeshProUGUI latText;
     [SerializeField] private TextMeshProUGUI lngText;
-    [SerializeField] private TextMeshProUGUI headingText;
+    [SerializeField] private TextMeshProUGUI trueHeadingText;
+    [SerializeField] private TextMeshProUGUI magneticHeadingText;
 
     void Start()
     {
@@ -36,9 +37,11 @@ public class GPSManager : MonoBehaviour
 
         var latitude = Input.location.lastData.latitude;
         var longitude = Input.location.lastData.longitude;
-        var heading = Input.compass.trueHeading;
+        var trueHeading = Input.compass.trueHeading;
+        var magneticHeading = Input.compass.magneticHeading;
         latText.SetText($"Latitude: {latitude}");
         lngText.SetText($"Longitude: {longitude}");
-        headingText.SetText($"Heading: {heading}");
+        trueHeadingText.SetText($"Heading: {trueHeading}");
+        magneticHeadingText.SetText($"Heading: {magneticHeading}");
     }
 }
